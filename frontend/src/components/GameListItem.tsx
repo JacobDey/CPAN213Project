@@ -2,15 +2,18 @@ import { Text, Pressable, Image, StyleSheet } from "react-native";
 import { Link } from "expo-router";
 import DefaultIcon from "@assets/images/icon.png";
 import { Game } from "@constants/types";
+import { useDispatch } from "react-redux";
+import { setGame } from "@/store/gameSlice";
 
 type GameListItemProps = {
     game: Game;
 };
 
 const GameListItem = ({ game }: GameListItemProps) => {
+    const dispatch = useDispatch();
     return (
-        <Link href={`/${game.id}`} asChild>
-            <Pressable style={styles.container}>
+        <Link href={`/game/${game.guid}`} asChild>
+            <Pressable style={styles.container} onPress={() => dispatch(setGame(game))}>
                 <Image
                     source={game.image?.thumb_url ? { uri: game.image.thumb_url } : DefaultIcon}
                     style={styles.image}
