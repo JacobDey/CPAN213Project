@@ -1,6 +1,5 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { Platform } from "react-native";
 import TabBarBackground from "@components/ui/TabBarBackground";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
@@ -12,8 +11,12 @@ export default function TabLayout() {
                 tabBarActiveTintColor: "#E9A6A6",
                 tabBarBackground: TabBarBackground,
                 tabBarStyle: {
-                    backgroundColor: "#1f1d36",
+                    backgroundColor: "#282549",
+                    borderTopWidth: 0,
                 },
+                headerStyle: {
+                    backgroundColor: "#282549"
+                }
             }}
         >
             <Tabs.Screen name="index" options={{ href: null }} />

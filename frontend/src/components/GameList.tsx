@@ -1,14 +1,19 @@
 import { Text, View, FlatList, StyleSheet } from "react-native";
 import GameListItem from "./GameListItem";
+import { Game } from "@constants/types";
 
-const GameList = ({ games = [] }) => {
+type GameListProps = {
+    games: Game[];
+}
+
+const GameList = ({ games = [] }: GameListProps) => {
     return (
         <View style={styles.container}>
             <FlatList
                 data={games}
                 renderItem={({ item }) => <GameListItem game={item} />}
                 ListEmptyComponent={<Text style={styles.emptyText}>No games available</Text>}
-                keyExtractor={item => item.id}
+                keyExtractor={item => item.id.toString()}
                 numColumns={2}
             />
         </View>

@@ -1,11 +1,13 @@
 import { StyleSheet, View, Text } from "react-native";
 
-export default function TabTwoScreen() {
+const LevelingScreen = () => {
     return (
         <View>
             <Text>Hello</Text>
         </View>
     );
-}
+};
+
+export default LevelingScreen;
 
 const styles = StyleSheet.create({});

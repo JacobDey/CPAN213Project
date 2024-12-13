@@ -46,7 +46,7 @@ export type Game = {
     number_of_user_reviews?: number;
     objects?: string[];
     original_game_rating?: string[];
-    original_release_date?: string;
+    original_release_date: string;
     people?: string[];
     platforms?: string[];
     publishers?: string[];
