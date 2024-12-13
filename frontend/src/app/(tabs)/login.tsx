@@ -1,7 +1,7 @@
 import { Text, TextInput, SafeAreaView, StyleSheet, Button } from "react-native";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { login, logout } from "../../slices/userslice";
+import { login, logout } from "../../slices/userSlice";
 
 export default function LoginScreen() {
     // mockup user database

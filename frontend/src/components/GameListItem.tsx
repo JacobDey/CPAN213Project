@@ -3,7 +3,7 @@ import { Link } from "expo-router";
 import DefaultIcon from "@assets/images/icon.png";
 import { Game } from "@constants/types";
 import { useDispatch } from "react-redux";
-import { setGame } from "@/store/gameSlice";
+import { setGame } from "@/slices/gameSlice";
 
 type GameListItemProps = {
     game: Game;

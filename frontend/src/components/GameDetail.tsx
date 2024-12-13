@@ -1,5 +1,6 @@
 import { Game } from "@constants/types";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
+import { Link } from "expo-router";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 type GameDetailProps = {
@@ -19,10 +20,12 @@ const GameDetail = ({ game }: GameDetailProps) => {
                     <Text style={styles.releaseDateText}>{new Date(game.original_release_date).getFullYear()}</Text>
                 </View>
             </View>
+            <Link href={`/game/review/${game.guid}`} asChild>
             <TouchableOpacity style={styles.addReviewButton} onPress={handleAddReview}>
                 <MaterialIcons name="add" size={16} color="black" style={styles.icon} />
                 <Text style={styles.addReviewButtonText}>Rate or Review</Text>
             </TouchableOpacity>
+            </Link>
             {/* Second Block: Deck */}
             <View style={styles.deckBlock}>
                 <Text style={styles.deckText}>{game.deck}</Text>
