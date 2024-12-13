@@ -1,56 +1,84 @@
-import { Text, SafeAreaView, StyleSheet, TextInput, View } from "react-native";
+import { Text, SafeAreaView, StyleSheet, TextInput, View, Image, TouchableOpacity, Animated} from "react-native";
 import ProgressBar from "@components/ProgressBar";
 import * as Progress from "react-native-progress";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import LevelUpModal from "@components/LevelUpModal";
+import { Stack, useRouter } from "expo-router";
 
-function ReviewText() {
-    const [progress, setProgress] = useState(0);
-    const [text, onChangeText] = useState("");
-    const [color, setColor] = useState("blue");
+const imagePath = require('../../../assets/images/CriticXP_logo.png');
 
-    useEffect(() => {
-        if (text.length <= 60) {
-            setColor("green");
-        } else if (text.length <= 85) {
-            setColor("gold");
-        } else if (text.length < 100) {
-            setColor("orange");
-        } else if (text.length == 100) {
-            setColor("red");
-        }
-        setProgress(text.length);
-    }, [text]);
-    return (
-        <SafeAreaView
-            style={{
-                flex: 1,
-                justifyContent: "center",
-                backgroundColor: "#ecf0f1",
-                alignItems: "center",
-            }}
-        >
-            <TextInput
-                editable
-                multiline
-                numberOfLines={4}
-                maxLength={100}
-                onChangeText={(text) => onChangeText(text)}
-                value={text}
-                style={styles.textInput}
-                placeholder="Enter your review here"
-            />
-            <Text>Character Limit: 100</Text>
-            <ProgressBar progress={progress} color={color} barLength={100} />
-        </SafeAreaView>
-    );
-}
+// function ReviewText() {
+//     const [progress, setProgress] = useState(0);
+//     const [text, onChangeText] = useState("");
+//     const [color, setColor] = useState("blue");
+
+//     useEffect(() => {
+//         if (text.length <= 60) {
+//             setColor("green");
+//         } else if (text.length <= 85) {
+//             setColor("gold");
+//         } else if (text.length < 100) {
+//             setColor("orange");
+//         } else if (text.length == 100) {
+//             setColor("red");
+//         }
+//         setProgress(text.length);
+//     }, [text]);
+//     return (
+//         <SafeAreaView
+//             style={{
+//                 flex: 1,
+//                 justifyContent: "center",
+//                 backgroundColor: "#ecf0f1",
+//                 alignItems: "center",
+//             }}
+//         >
+//             <TextInput
+//                 editable
+//                 multiline
+//                 numberOfLines={4}
+//                 maxLength={100}
+//                 onChangeText={(text) => onChangeText(text)}
+//                 value={text}
+//                 style={styles.textInput}
+//                 placeholder="Enter your review here"
+//             />
+//             <Text>Character Limit: 100</Text>
+//             <ProgressBar progress={progress} color={color} barLength={100} />
+//         </SafeAreaView>
+//     );
+// }
 
 export default function Profile() {
     //remove ReviewText after you move the function
-    const [numReviews, setNumReviews] = useState(9);
+    const [numReviews, setNumReviews] = useState(25);
     const [level, setLevel] = useState(0);
     const [progress, setProgress] = useState(0);
     const [color, setColor] = useState("blue");
+
+    const [isLevelUpModalVisible, setLevelUpModalVisible] = useState(false);
+    // const [currentLevel, setCurrentLevel] = useState(1);
+
+    const toggleLevelUpModal = () => {
+        setLevelUpModalVisible(!isLevelUpModalVisible);
+    };
+
+    const handleLevelUp = () => {
+        // setLevel((prevLevel) => prevLevel + 1); // Increment level
+        toggleLevelUpModal(); 
+    };
+
+    const router = useRouter();
+    const imgHeight = useRef(new Animated.Value(170)).current;
+      
+        function HomeClick() {
+          Animated.sequence([
+            Animated.timing(imgHeight, { toValue: 175, duration: 150, useNativeDriver: false }),
+            Animated.timing(imgHeight, { toValue: 170, duration: 150, useNativeDriver: false }),
+          ]).start(() => {
+            router.push(`/game`)
+          });
+        }
 
     useEffect(() => {
         setProgress(numReviews % 10);
@@ -60,6 +88,7 @@ export default function Profile() {
 
         if (numReviews % 10 == 0) {
             //animation for level up here
+            handleLevelUp();
         }
         if (numReviews % 10 <= 3) {
             setColor("lightskyblue");
@@ -72,10 +101,39 @@ export default function Profile() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>/Username/</Text>
-            <Text style={styles.header}>Current Reviews: {numReviews}</Text>
-            <Text style={styles.header}>Level: {level}</Text>
+            <TouchableOpacity onPress={() => HomeClick()}>
+                <Animated.Image
+                    style={{
+                    width: undefined,      
+                    height: imgHeight,     
+                    aspectRatio: 1,        
+                    resizeMode: 'contain', 
+                    }}
+                    source={imagePath}
+                />
+            </TouchableOpacity>
+            <Text style={[styles.header, {margin:15}]}>Username</Text>
+            <Text style={styles.subheader}>Level: {level}    Current Reviews: {numReviews}</Text>
+            <Text style={styles.subheader}></Text>
             <ProgressBar progress={progress} color={color} barLength={10} />
+
+            {/* Debug Review Counter */}
+            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center',  padding: 10,}}>
+                <TouchableOpacity onPress={() => setNumReviews(numReviews - 1)}>
+                    <Text style={styles.header}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.subheader}>Debug Counter</Text>
+                <TouchableOpacity onPress={() => setNumReviews(numReviews + 1)}>
+                    <Text style={styles.header}>+</Text>
+                </TouchableOpacity>
+            </View>
+
+            {/* LevelUpModal */}
+        <LevelUpModal
+            isModalVisible={isLevelUpModalVisible}
+            toggleModal={toggleLevelUpModal}
+            level={level}
+        />
         </View>
 
         // {/* <ReviewText /> */}
@@ -89,7 +147,13 @@ const styles = StyleSheet.create({
     },
     header: {
         color: "white",
-        fontSize: 16,
+        fontSize: 24,
+        fontWeight: "bold",
+    },
+    subheader: {
+        color: "white",
+        fontSize: 20,
+        fontWeight: "bold",
     },
     container: {
         // flex: 1,
@@ -98,6 +162,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#282549",
         flex: 1,
-        minHeight: "100%",
+        minHeight: "100%"
+        
     },
 });

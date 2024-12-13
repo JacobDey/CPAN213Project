@@ -1,10 +1,12 @@
 import { Game, Rating, Review } from "@constants/types";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Image, Text, View, StyleSheet, TextInput, Pressable } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import StarRating from "react-native-star-rating-widget";
 import { addReview } from "@/slice/reviewSlice";
+import ReviewCongratsModal from "@components/ReviewCongratsModal";
+import ProgressBar from '@components/ProgressBar';
 
 const ReviewDetailScreen = () => {
     const dispatch = useDispatch();
@@ -13,6 +15,16 @@ const ReviewDetailScreen = () => {
     const game: Game = useSelector((state: any) => state.game.currentGame);
     const [description, setDescription] = useState("");
     const [rating, setRating] = useState<Rating>(0);
+    // State for ReviewCongratsModal
+    const [isCongratsModalVisible, setCongratsModalVisible] = useState(false);
+
+    const toggleCongratsModal = () => {
+        setCongratsModalVisible(!isCongratsModalVisible);
+    };
+
+    const handleCongrats = () => {
+        toggleCongratsModal(); // Show ReviewCongratsModal
+    };
 
     const handleSubmit = () => {
         const newReview: Review = {
@@ -27,7 +39,25 @@ const ReviewDetailScreen = () => {
         setRating(0);
         setDescription("");
         router.push(`/game/${game.guid}`);
+        handleCongrats();
     };
+
+    //Review Progress Bar stuff below
+    const [progress, setProgress] = useState(0);
+    const [color, setColor] = useState('blue');
+
+    useEffect(() => {
+        if (description.length <= 60) {
+          setColor('green');
+        } else if (description.length <= 85) {
+          setColor('gold');
+        } else if (description.length < 100) {
+          setColor('orange');
+        } else if (description.length == 100) {
+          setColor('red');
+        }
+        setProgress(description.length);
+      }, [description]);
 
     return (
         <View style={styles.container}>
@@ -50,19 +80,31 @@ const ReviewDetailScreen = () => {
 
                 <Image source={{ uri: game.image?.medium_url }} resizeMode="cover" style={styles.image} />
             </View>
-
+            
             <TextInput
                 editable
                 multiline
                 value={description}
+                maxLength={100}
                 onChangeText={(text) => setDescription(text)}
                 placeholder="Write your review here..."
                 style={styles.textInput}
             />
+            <Text style={[styles.heading, {alignSelf: 'center'}]}>Character Limit: 100</Text>
+            <View style={{width: '100%', alignItems: 'center'}} >
+                <ProgressBar progress={progress} color={color} barLength={100}/>
+            </View>
+            
 
             <Pressable style={styles.submitButton} onPress={handleSubmit}>
                 <Text style={styles.submitButtonText}>Publish</Text>
             </Pressable>
+
+            <ReviewCongratsModal
+                isModalVisible={isCongratsModalVisible}
+                toggleModal={toggleCongratsModal}
+            />
+
         </View>
     );
 };
