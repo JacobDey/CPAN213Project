@@ -1,5 +1,5 @@
 import { Game } from "@constants/types";
-import { createSlice, configureStore, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface GameState {
     currentGame: Game | null;
@@ -24,10 +24,4 @@ const gameSlice = createSlice({
 
 export const { setGame, clearGame } = gameSlice.actions;
 
-const store = configureStore({
-    reducer: {
-        game: gameSlice.reducer,
-    },
-});
-
-export default store;
+export default gameSlice.reducer;

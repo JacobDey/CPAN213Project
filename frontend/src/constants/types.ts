@@ -61,3 +61,14 @@ export type Game = {
         url: string;
     }>;
 };
+
+export type Rating = 0 | 0.5 | 1 | 1.5 | 2 | 2.5 | 3 | 3.5 | 4 | 4.5 | 5;
+
+export type Review = {
+    id: number,
+    gameGUID: string,
+    name: string;
+    date: string;
+    description: string | null;
+    rating: Rating;
+};

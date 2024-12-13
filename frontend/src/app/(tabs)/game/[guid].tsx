@@ -3,7 +3,7 @@ import { Text, View, StyleSheet } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import DiagonalImageOverlay from "@components/DiagonalImageOverlay";
 import GameDetail from "@components/GameDetail";
-import { setGame } from "@/store/gameSlice";
+import { setGame } from "@/slice/gameSlice";
 import { useEffect } from "react";
 
 const GameDetailScreen = () => {

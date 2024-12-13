@@ -15,11 +15,11 @@ export default function TabLayout() {
                     borderTopWidth: 0,
                 },
                 headerStyle: {
-                    backgroundColor: "#282549"
-                }
+                    backgroundColor: "#282549",
+                },
             }}
         >
-            <Tabs.Screen name="index" options={{ href: null }} />
+            <Tabs.Screen name="index" options={{ title: "Home", href: null }} />
             <Tabs.Screen
                 name="game"
                 options={{
@@ -28,9 +28,10 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="explore"
+                name="review"
                 options={{
-                    title: "Explore",
+                    title: "Review",
+                    href: null,
                 }}
             />
         </Tabs>
