@@ -28,6 +28,21 @@ export default function TabLayout() {
                 name="explore"
                 options={{
                     title: "Explore",
+                    tabBarIcon: ({ color }) => <MaterialIcons size={28} name="explore" color={color} />,
+                }}
+            />
+             <Tabs.Screen
+                name="login"
+                options={{
+                    title: "Login",
+                    tabBarIcon: ({ color }) => <MaterialIcons size={28} name="login" color={color} />,
+                }}
+            />
+            <Tabs.Screen
+                name="profile"
+                options={{
+                    title: "Profile",
+                    tabBarIcon: ({ color }) => <MaterialIcons size={28} name="person" color={color} />,
                 }}
             />
         </Tabs>
