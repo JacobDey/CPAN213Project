@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "frontend",
+    "name": "CPAN213FinalProject",
     "slug": "frontend",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/CriticXP_logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -16,7 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.lopocozo.frontend"
+      "package": "critic.xp.prototype"
     },
     "web": {
       "bundler": "metro",
