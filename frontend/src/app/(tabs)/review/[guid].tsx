@@ -1,4 +1,5 @@
 import { Game, Rating, Review } from "@constants/types";
+// import necessary modules and components
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState, useEffect } from "react";
 import { Image, Text, View, StyleSheet, TextInput, Pressable } from "react-native";
@@ -9,6 +10,7 @@ import ReviewCongratsModal from "@components/ReviewCongratsModal";
 import ProgressBar from '@components/ProgressBar';
 import { changeNumberOfReviews } from "@/slice/userSlice";
 import LevelUpModal from "@components/LevelUpModal";
+import React from "react";
 
 const ReviewDetailScreen = () => {
     const dispatch = useDispatch();
@@ -17,7 +19,7 @@ const ReviewDetailScreen = () => {
     const game: Game = useSelector((state: any) => state.game.currentGame);
     const [description, setDescription] = useState("");
     const [rating, setRating] = useState<Rating>(0);
-    // State for ReviewCongratsModal
+    // state for ReviewCongratsModal
     const [isCongratsModalVisible, setCongratsModalVisible] = useState(false);
     const [isLevelUpModalVisible, setLevelUpModalVisible] = useState(false);
     const identity = useSelector((state: { user: { username: string } }) => state.user.username);
@@ -33,19 +35,19 @@ const ReviewDetailScreen = () => {
     };
 
     const handleCongrats = () => {
-        toggleCongratsModal(); // Show ReviewCongratsModal
+        toggleCongratsModal(); // show ReviewCongratsModal
         if (isCongratsModalVisible) {
             setTimeout(() => {
                 if (numReviews % 10 === 0) {
-                toggleCongratsModal(); // Hide ReviewCongratsModal after 3 seconds
+                toggleCongratsModal(); // hide ReviewCongratsModal after 3 seconds
                 }
-                //PLAY LEVEL UP MODAL IF LEVEL UP HAPPEN
+                // play level up modal if level up happens
             }, 3000);
         }
     };
 
     // const handleLevelUp = () => {
-    //     // setLevel((prevLevel) => prevLevel + 1); // Increment level
+    //     // setLevel((prevLevel) => prevLevel + 1); // increment level
     //     setLevel(r)
     //     toggleLevelUpModal(); 
     // };
@@ -68,7 +70,7 @@ const ReviewDetailScreen = () => {
         handleCongrats();
     };
 
-    //Review Progress Bar stuff below
+    // review progress bar stuff below
     const [progress, setProgress] = useState(0);
     const [color, setColor] = useState('blue');
 

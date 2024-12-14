@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
+// importing necessary components from react-native
 import { Button, SafeAreaView, Text, StyleSheet, Animated } from 'react-native';
+// importing modal from react-native-modal
 import Modal from 'react-native-modal'; // Importing react-native-modal
 
+// defining props for the component
 interface LevelUpModalProps {
   isModalVisible: boolean,
   toggleModal(): void,
@@ -9,8 +12,10 @@ interface LevelUpModalProps {
 }
 
 export default function LevelUpModal({ isModalVisible, toggleModal, level }: LevelUpModalProps) {
+  // animated value for bounce effect
   const bounceValue = new Animated.Value(0); // Animated value for bounce effect
 
+  // function to trigger bounce animation
   const bounceIn = () => {
     Animated.spring(bounceValue, {
       toValue: 1,
@@ -20,10 +25,12 @@ export default function LevelUpModal({ isModalVisible, toggleModal, level }: Lev
     }).start();
   };
 
+  // function to reset bounce value
   const resetBounce = () => {
     bounceValue.setValue(0); // Reset the bounce value to 0
   };
 
+  // useEffect to handle modal visibility changes
   useEffect(() => {
     if (isModalVisible) {
       bounceIn(); // Trigger bounce animation when modal is opened
@@ -36,15 +43,21 @@ export default function LevelUpModal({ isModalVisible, toggleModal, level }: Lev
     <Modal
       isVisible={isModalVisible}
       onBackdropPress={() => toggleModal()}
-      style={styles.modal} // Apply modal-specific styles
+      style={styles.modal}
     >
       <SafeAreaView style={styles.modalContent}>
         <Animated.View
-          style={[styles.animatedModalContent, { transform: [{ scale: bounceValue }] }]} // Apply bounce animation
+          style={[styles.animatedModalContent, { transform: [{ scale: bounceValue }] }]}
         >
-          <Text style={styles.modalText}>
-            Congratulations! You've leveled up to Level {level}!
-          </Text>
+          {level === 0 ? (
+            <Text style={styles.modalText}>
+              You're at level 0! Review 10 books to get your first level!
+            </Text>
+          ) : (
+            <Text style={styles.modalText}>
+              Congratulations! You've leveled up to Level {level}!
+            </Text>
+          )}
           <Button title="Close" onPress={toggleModal}/>
         </Animated.View>
       </SafeAreaView>
@@ -52,6 +65,7 @@ export default function LevelUpModal({ isModalVisible, toggleModal, level }: Lev
   );
 }
 
+// styles for the modal and its content
 const styles = StyleSheet.create({
   modal: {
     justifyContent: 'center',

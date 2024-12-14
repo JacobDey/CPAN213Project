@@ -1,6 +1,8 @@
+import React from "react";
 import { useRef, useEffect } from "react";
 import { View, StyleSheet, Animated, Text } from "react-native";
 
+// interface for progress bar props
 interface ProgressBarProps {
     color: string;
     barLength: number;
@@ -8,8 +10,10 @@ interface ProgressBarProps {
 }
 
 const Progressbar = ({ color, barLength, progress }: ProgressBarProps) => {
+    // animated value for progress
     const animatedProgress = useRef(new Animated.Value(progress)).current;
 
+    // update animation on progress change
     useEffect(() => {
         Animated.timing(animatedProgress, {
             toValue: progress,
@@ -19,6 +23,7 @@ const Progressbar = ({ color, barLength, progress }: ProgressBarProps) => {
     }, [progress]);
 
     return (
+        // container for progress bar
         <View style={{ width: "80%", height: 100 }}>
             <Animated.View
                 style={[
@@ -54,6 +59,7 @@ const Progressbar = ({ color, barLength, progress }: ProgressBarProps) => {
 
 export default Progressbar;
 
+// styles for progress bar components
 const styles = StyleSheet.create({
     container: {
         borderWidth: 1,

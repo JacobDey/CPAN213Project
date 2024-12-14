@@ -1,3 +1,4 @@
+// import statements
 import { Game } from "@constants/types";
 import { Text, View, StyleSheet, Image, TouchableOpacity } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
@@ -8,23 +9,28 @@ import { Review } from "@constants/types";
 import ReviewList from "./ReviewList";
 import { Link } from "expo-router";
 
+// type definitions
 type GameDetailProps = {
     game: Game;
 };
-//gggg
+
+// component definition
 const GameDetail = ({ game }: GameDetailProps) => {
+    // state and selectors
     const reviews = useSelector((state: any) => state.review.reviews).filter(
         (review: Review) => review.gameGUID === game.guid,
     );
     const [rating, setRating] = useState(0);
     const handleAddReview = () => {};
 
+    // effect to calculate rating
     useEffect(() => {
         if (reviews.length === 0) return;
         const totalRatings = reviews.reduce((sum: number, review: Review) => sum + review.rating, 0);
         setRating(totalRatings / reviews.length);
     }, [reviews]);
 
+    // component render
     return (
         <View style={styles.container}>
             <View style={styles.infoBlock}>
@@ -57,6 +63,7 @@ const GameDetail = ({ game }: GameDetailProps) => {
     );
 };
 
+// styles
 const styles = StyleSheet.create({
     container: {
         marginTop: 75,

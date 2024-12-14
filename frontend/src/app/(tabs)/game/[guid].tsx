@@ -41,9 +41,7 @@ const GameDetailScreen = () => {
     return (
         <View style={styles.container}>
             <DiagonalImageOverlay image={game.image.screen_url} />
-            // render image overlay
             <GameDetail game={game} />
-            // render game detail
         </View>
     )
 }

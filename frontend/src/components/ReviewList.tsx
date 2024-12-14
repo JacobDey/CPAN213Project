@@ -1,12 +1,15 @@
+// import statements
 import React from "react";
 import { FlatList, StyleSheet, View, Text } from "react-native";
 import ReviewListItem from "./ReviewListItem";
 import { Review } from "@constants/types";
 
+// type definition for props
 type ReviewListProps = {
     reviews: Review[];
 };
 
+// review list component
 const ReviewList = ({ reviews }: ReviewListProps) => {
     return (
         <View style={styles.container}>
@@ -22,6 +25,7 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
     );
 };
 
+// styles for the component
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -38,4 +42,5 @@ const styles = StyleSheet.create({
     },
 });
 
+// export statement
 export default ReviewList;

@@ -4,17 +4,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../slice/userSlice";
 import React from "react";
 
+// component definition
 export default function LoginScreen() {
     // mockup user database
     const validUsers = [
         { username: "username", password: "password" },
         { username: "john", password: "smith" },
     ];
+    // state variables
     const [usernameInput, onChangeUsernameInput] = useState("");
     const [passwordInput, onChangePasswordInput] = useState("");
     const dispatch = useDispatch();
     const identity = useSelector((state: { user: { username: string } }) => state.user.username);
 
+    // login handler
     const handleLogin = () => {
         for (let i = 0; i < validUsers.length; i++) {
             if (usernameInput === validUsers[i].username && passwordInput === validUsers[i].password) {
@@ -23,14 +26,15 @@ export default function LoginScreen() {
                 break;
             }
         }
-        
     };
 
+    // logout handler
     const handleLogout = () => {
         console.log("Logout begin!");
         dispatch(logout());
     };
 
+    // component render
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.text}>Login (Username: "john" Password: "smith")</Text>
@@ -55,6 +59,7 @@ export default function LoginScreen() {
     );
 }
 
+// styles
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "#282549",
@@ -78,7 +83,7 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 20,
     },
-    // Mandatory flexbox usage
+    // mandatory flexbox usage
     buttonContainer: {
         flexDirection: "row",
         justifyContent: "space-between",

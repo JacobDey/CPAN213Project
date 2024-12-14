@@ -1,13 +1,15 @@
+// import statements
 import { Tabs } from "expo-router";
 import React from "react";
 import TabBarBackground from "@components/ui/TabBarBackground";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import {Text} from 'react-native'
+import { Text } from 'react-native';
 
+// tab layout component
 export default function TabLayout() {
-    
     return (
         <Tabs
+            // screen options
             screenOptions={{
                 headerShown: false,
                 tabBarActiveTintColor: "#E9A6A6",
@@ -21,6 +23,7 @@ export default function TabLayout() {
                 },
             }}
         >
+            // tab screens
             <Tabs.Screen name="index" options={{ title: "Home", href: null }} />
             <Tabs.Screen
                 name="game"

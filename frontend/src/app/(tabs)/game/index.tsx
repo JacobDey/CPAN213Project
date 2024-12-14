@@ -34,17 +34,12 @@ const HomeScreen = () => {
     };
 
     return (
-        // main container view
         <View style={styles.container}>
-            // text for find a game
-            <Text style={styles.text}>Find a game</Text>
-            // text input for search query
-            <TextInput style={styles.search} onChangeText={setQueryTerm} value={queryTerm} />
-            // pressable button for search
+            <Text style={styles.text}>Welcome to CriticXP!</Text>
+            <TextInput style={styles.search} placeholder="Find a game to review!"  onChangeText={setQueryTerm} value={queryTerm} />
             <Pressable onPress={fetchGames} style={styles.searchButton}>
                 <Text style={styles.searchButtonText}>Search</Text>
             </Pressable>
-            // game list component
             <GameList games={games} />
         </View>
     );

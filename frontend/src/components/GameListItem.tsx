@@ -1,17 +1,22 @@
+// import statements
 import { Text, Pressable, Image, StyleSheet } from "react-native";
 import { Link } from "expo-router";
-import DefaultIcon from "@assets/images/icon.png";
+import DefaultIcon from "../../assets/images/icon.png";
 import { Game } from "@constants/types";
 import { useDispatch } from "react-redux";
 import { setGame } from "@/slice/gameSlice";
+import React from "react";
 
+// type definitions
 type GameListItemProps = {
     game: Game;
 };
 
+// component definition
 const GameListItem = ({ game }: GameListItemProps) => {
     const dispatch = useDispatch();
     return (
+        // link to game details
         <Link href={`/game/${game.guid}`} asChild>
             <Pressable style={styles.container} onPress={() => dispatch(setGame(game))}>
                 <Image
@@ -25,6 +30,7 @@ const GameListItem = ({ game }: GameListItemProps) => {
     );
 };
 
+// styles
 const styles = StyleSheet.create({
     container: {
         flexDirection: "column",

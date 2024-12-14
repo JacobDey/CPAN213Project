@@ -1,15 +1,16 @@
+// import statements
 import { View, Text, StyleSheet } from "react-native";
 import { Review } from "@constants/types";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
 import { useSelector } from "react-redux";
 import React from "react";
 
-//const identity = useSelector((state: { user: { username: string } }) => state.user.username);
-
+// type definition for props
 type ReviewListItemProps = {
     review: Review;
 };
 
+// functional component
 const ReviewListItem = ({ review }: ReviewListItemProps) => {
     return (
         <View style={styles.container}>
@@ -29,6 +30,7 @@ const ReviewListItem = ({ review }: ReviewListItemProps) => {
     );
 };
 
+// styles
 const styles = StyleSheet.create({
     container: {
         width: "100%",
@@ -75,4 +77,5 @@ const styles = StyleSheet.create({
     },
 });
 
+// export statement
 export default ReviewListItem;
