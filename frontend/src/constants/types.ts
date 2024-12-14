@@ -71,4 +71,9 @@ export type Review = {
     date: string;
     description: string | null;
     rating: Rating;
+    username: string;
+};
+
+export type User = {
+    username: string;
 };

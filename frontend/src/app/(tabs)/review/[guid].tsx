@@ -7,6 +7,8 @@ import StarRating from "react-native-star-rating-widget";
 import { addReview } from "@/slice/reviewSlice";
 import ReviewCongratsModal from "@components/ReviewCongratsModal";
 import ProgressBar from '@components/ProgressBar';
+import { changeNumberOfReviews } from "@/slice/userSlice";
+import LevelUpModal from "@components/LevelUpModal";
 
 const ReviewDetailScreen = () => {
     const dispatch = useDispatch();
@@ -17,14 +19,36 @@ const ReviewDetailScreen = () => {
     const [rating, setRating] = useState<Rating>(0);
     // State for ReviewCongratsModal
     const [isCongratsModalVisible, setCongratsModalVisible] = useState(false);
+    const [isLevelUpModalVisible, setLevelUpModalVisible] = useState(false);
+    const identity = useSelector((state: { user: { username: string } }) => state.user.username);
+    const numReviews = useSelector((state: { user: { numberOfReviews: number } }) => state.user.numberOfReviews);
+    const [level, setLevel] = useState(Math.floor(numReviews / 10));
 
     const toggleCongratsModal = () => {
         setCongratsModalVisible(!isCongratsModalVisible);
     };
 
+    const toggleLevelUpModal = () => {
+        setLevelUpModalVisible(!isLevelUpModalVisible);
+    };
+
     const handleCongrats = () => {
         toggleCongratsModal(); // Show ReviewCongratsModal
+        if (isCongratsModalVisible) {
+            setTimeout(() => {
+                if (numReviews % 10 === 0) {
+                toggleCongratsModal(); // Hide ReviewCongratsModal after 3 seconds
+                }
+                //PLAY LEVEL UP MODAL IF LEVEL UP HAPPEN
+            }, 3000);
+        }
     };
+
+    // const handleLevelUp = () => {
+    //     // setLevel((prevLevel) => prevLevel + 1); // Increment level
+    //     setLevel(r)
+    //     toggleLevelUpModal(); 
+    // };
 
     const handleSubmit = () => {
         const newReview: Review = {
@@ -34,7 +58,9 @@ const ReviewDetailScreen = () => {
             date: new Date().toISOString(),
             description: description || null,
             rating: rating,
+            username: identity,
         };
+        dispatch(changeNumberOfReviews(1));
         dispatch(addReview(newReview));
         setRating(0);
         setDescription("");
@@ -104,7 +130,11 @@ const ReviewDetailScreen = () => {
                 isModalVisible={isCongratsModalVisible}
                 toggleModal={toggleCongratsModal}
             />
-
+        <LevelUpModal
+            isModalVisible={isLevelUpModalVisible}
+            toggleModal={toggleLevelUpModal}
+            level={level}
+        />
         </View>
     );
 };

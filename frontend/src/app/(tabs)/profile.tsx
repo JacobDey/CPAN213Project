@@ -4,6 +4,7 @@ import * as Progress from "react-native-progress";
 import { useState, useEffect, useRef } from "react";
 import LevelUpModal from "@components/LevelUpModal";
 import { Stack, useRouter } from "expo-router";
+import { useSelector } from "react-redux";
 
 const imagePath = require('../../../assets/images/CriticXP_logo.png');
 
@@ -51,10 +52,11 @@ const imagePath = require('../../../assets/images/CriticXP_logo.png');
 
 export default function Profile() {
     //remove ReviewText after you move the function
-    const [numReviews, setNumReviews] = useState(25);
+    //const [numReviews, setNumReviews] = useState(25);
     const [level, setLevel] = useState(0);
     const [progress, setProgress] = useState(0);
     const [color, setColor] = useState("blue");
+
 
     const [isLevelUpModalVisible, setLevelUpModalVisible] = useState(false);
     // const [currentLevel, setCurrentLevel] = useState(1);
@@ -67,6 +69,9 @@ export default function Profile() {
         // setLevel((prevLevel) => prevLevel + 1); // Increment level
         toggleLevelUpModal(); 
     };
+
+    const identity = useSelector((state: { user: { username: string } }) => state.user.username);
+    const numReviews = useSelector((state: { user: { numberOfReviews: number } }) => state.user.numberOfReviews);
 
     const router = useRouter();
     const imgHeight = useRef(new Animated.Value(170)).current;
@@ -112,21 +117,10 @@ export default function Profile() {
                     source={imagePath}
                 />
             </TouchableOpacity>
-            <Text style={[styles.header, {margin:15}]}>Username</Text>
+            <Text style={[styles.header, {margin:15}]}>{identity}</Text>
             <Text style={styles.subheader}>Level: {level}    Current Reviews: {numReviews}</Text>
             <Text style={styles.subheader}></Text>
             <ProgressBar progress={progress} color={color} barLength={10} />
-
-            {/* Debug Review Counter */}
-            <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'center',  padding: 10,}}>
-                <TouchableOpacity onPress={() => setNumReviews(numReviews - 1)}>
-                    <Text style={styles.header}>-</Text>
-                </TouchableOpacity>
-                <Text style={styles.subheader}>Debug Counter</Text>
-                <TouchableOpacity onPress={() => setNumReviews(numReviews + 1)}>
-                    <Text style={styles.header}>+</Text>
-                </TouchableOpacity>
-            </View>
 
             {/* LevelUpModal */}
         <LevelUpModal

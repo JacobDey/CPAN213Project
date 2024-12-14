@@ -5,6 +5,7 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {Text} from 'react-native'
 
 export default function TabLayout() {
+    
     return (
         <Tabs
             screenOptions={{
@@ -31,8 +32,8 @@ export default function TabLayout() {
             <Tabs.Screen
                 name="login"
                 options={{
-                    title: "Home",
-                    tabBarIcon: ({ color }) => <MaterialIcons size={28} name="home" color={color} />,
+                    title: "Login",
+                    tabBarIcon: ({ color }) => <MaterialIcons size={28} name="login" color={color} />,
                 }}
             />
             <Tabs.Screen

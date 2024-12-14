@@ -11,7 +11,7 @@ import { Link } from "expo-router";
 type GameDetailProps = {
     game: Game;
 };
-
+//gggg
 const GameDetail = ({ game }: GameDetailProps) => {
     const reviews = useSelector((state: any) => state.review.reviews).filter(
         (review: Review) => review.gameGUID === game.guid,

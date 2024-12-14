@@ -1,6 +1,10 @@
 import { View, Text, StyleSheet } from "react-native";
 import { Review } from "@constants/types";
 import { StarRatingDisplay } from "react-native-star-rating-widget";
+import { useSelector } from "react-redux";
+import React from "react";
+
+//const identity = useSelector((state: { user: { username: string } }) => state.user.username);
 
 type ReviewListItemProps = {
     review: Review;
@@ -11,7 +15,7 @@ const ReviewListItem = ({ review }: ReviewListItemProps) => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.reviewBy}>Review by </Text>
-                <Text style={styles.name}>{review.name}</Text>
+                <Text style={styles.name}>{review.username}</Text>
                 <StarRatingDisplay
                     starStyle={styles.star}
                     starSize={16}
