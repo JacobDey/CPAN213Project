@@ -1,13 +1,14 @@
-import { Text, TextInput, SafeAreaView, StyleSheet, Button } from "react-native";
+import { Text, TextInput, SafeAreaView, StyleSheet, Button, View, Alert } from "react-native";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../../slice/userSlice";
+import React from "react";
 
 export default function LoginScreen() {
     // mockup user database
     const validUsers = [
-        { username: "lopocozo", password: "tulips" },
-        { username: "jacob", password: "spicybread" },
+        { username: "username", password: "password" },
+        { username: "john", password: "smith" },
     ];
     const [usernameInput, onChangeUsernameInput] = useState("");
     const [passwordInput, onChangePasswordInput] = useState("");
@@ -15,16 +16,12 @@ export default function LoginScreen() {
     const identity = useSelector((state: { user: { username: string } }) => state.user.username);
 
     const handleLogin = () => {
-        console.log("Process begin!");
         for (let i = 0; i < validUsers.length; i++) {
             if (usernameInput === validUsers[i].username && passwordInput === validUsers[i].password) {
-                console.log("Login successful!");
-                console.log(usernameInput);
                 dispatch(login(usernameInput));
-                console.log(identity);
+                Alert.alert("Login Successful", `Welcome, ${usernameInput}!`);
                 break;
             }
-            console.log("Login failure!");
         }
         
     };
@@ -36,7 +33,7 @@ export default function LoginScreen() {
 
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>Login</Text>
+            <Text style={styles.text}>Login (Username: "john" Password: "smith")</Text>
             <TextInput
                 placeholder="Enter your username here!"
                 style={styles.textBox}
@@ -49,8 +46,10 @@ export default function LoginScreen() {
                 onChangeText={onChangePasswordInput}
                 value={passwordInput}
             />
-            <Button title="Login" onPress={handleLogin} />
-            <Button title="Logout" onPress={handleLogout} />
+            <View style={styles.buttonContainer}>
+                <Button title="Login" onPress={handleLogin} />
+                <Button title="Logout" onPress={handleLogout} />
+            </View>
             {identity && <Text style={styles.text}>Welcome, {identity}</Text>}
         </SafeAreaView>
     );
@@ -78,5 +77,11 @@ const styles = StyleSheet.create({
         width: "80%",
         padding: 10,
         marginBottom: 20,
+    },
+    // Mandatory flexbox usage
+    buttonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "80%",
     },
 });
