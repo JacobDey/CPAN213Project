@@ -37,7 +37,7 @@ export default function LoginScreen() {
     // component render
     return (
         <SafeAreaView style={styles.container}>
-            <Text style={styles.text}>Login (Username: "john" Password: "smith")</Text>
+            <Text style={styles.text}>Login</Text>
             <TextInput
                 placeholder="Enter your username here!"
                 style={styles.textBox}
